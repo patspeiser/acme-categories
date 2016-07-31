@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../db.js');
-
-//console.log(db.CatToys);
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
 
 //REQUIRED FUNCTIONALITY
 // delete a category
@@ -10,21 +10,27 @@ var db = require('../db.js');
 // add product
 // delete product
 
+// need this to use delete when POSTing
+router.use(methodOverride('_method'));
+
 router.get('/:category', function(req, res){
 	var category = req.params.category;
-	res.render('categories', { products: db.getProducts(category), categories: db.getCategories() } );
+	res.render('categories', { products: db.getProducts(category), categories: db.getCategories(), category: category } );
 });
 
-router.post('/', function(req, res){
-	// do something when product is added
+router.post('/:category', function(req, res){
+	db.addProduct(req.params.category, req.body.newProduct);
+	res.redirect(req.params.category);
 });
 
-router.delete('/', function(req, res){
-	// when a cateogry is deleted redirect to home page
+router.delete('/:category', function(req, res){
+	db.deleteCategory(req.params.category);
+	res.redirect('/');
 });
 
-router.delete('/', function(req, res){
-	// do something when a product is deleted
+router.delete('/:category/:product', function(req, res){
+	db.deleteProduct(req.params.category, req.params.product);
+	res.redirect('back');
 });
 
 module.exports = router;

@@ -17,14 +17,21 @@ module.exports = {
 			_data[categoryToAdd] = [];
 		},
 	
-	deleteCategory: function(){
+	deleteCategory: function(categoryToDelete){
+			delete _data[categoryToDelete];
 		},
 	
 	addProduct: function(category, product){
 		_data[category].push({ name: product })	
 	},
 	
-	deleteProduct: function(){
+	deleteProduct: function(category, product){
+			_data[category].map( function(el, index, array){
+				if (el.name === product){
+					_data[category].splice(index, 1);
+				}
+			});
+	
 		},
 	
 	getProducts: function(category){

@@ -1,15 +1,36 @@
 {% extends 'layout.html' %}
 {% block content %}
-
 	<div class='container'>
+<p></p>
+<!-- delete category -->
+		<form method='POST' action='/categories/{{category}}?_method=DELETE'>
+			<button type='submit' class='btn btn-danger'> Delete Category </button>
+		</form>
+
+<!-- add products -->
 		<table class='table table-striped'>
+			<thead class='thead-inverse'>
+			
+			<form method='POST' action='/categories/{{category}}'>
+				<tr colspan=2> 
+					<input type='text' class='form-control' name='newProduct' placeholder='Add New Product'> 
+				</tr>
+			<tr>
+				<form method='POST' action='/'>
+					<button type='submit' class='btn btn-success'> Add Product </button>
+				</form>
+			</tr>
+		</thead>
+<!--display products -->
 		{% for product in products %}
 			<tr>
-				<td> {{ product.name }} </td>
-				<td> <button class='btn btn-danger'> Delete </button> </td>
+				<form method='POST' action='/categories/{{category}}/{{product.name}}?_method=DELETE'>
+					<td> {{ product.name }} </td>
+					<td> <button type='submit' class='btn btn-danger'> Delete </button> </td>
+				</form>
 			</tr>
 		{% endfor %}
 		</table>
 	</div>
-
+<!-- end product display -->
 {% endblock %}
