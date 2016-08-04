@@ -6,9 +6,11 @@
 	<body>
 		<div role = 'navigation' class='container fluid'>
 			<ul class='nav nav-tabs'>
-				<li role='presentation' class='active'> <a href='/'> Home </a> </li>
-				{% for category in categories %}
-					<li role='presentation'> <a href='/categories/{{category}}'> {{ category }} </a></li>
+				<li  {%if !category %} class='active' {% endif %} role='presentation'> <a href='/'> Home </a> </li>
+				{% for _category in categories %}
+        <li {%if _category === category %} class='active' {% endif %} role='presentation'>
+            <a href='/categories/{{_category}}'> {{ _category }}
+            </a></li>
 				{% endfor %}
 			</ul>
 		</div>

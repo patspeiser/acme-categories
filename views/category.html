@@ -11,7 +11,7 @@
 		<table class='table table-striped'>
 			<thead class='thead-inverse'>
 			
-			<form method='POST' action='/categories/{{category}}'>
+			<form method='POST' action='/categories/{{category}}/products'>
 				<tr colspan=2> 
 					<input type='text' class='form-control' name='newProduct' placeholder='Add New Product'> 
 				</tr>
@@ -24,7 +24,7 @@
 <!--display products -->
 		{% for product in products %}
 			<tr>
-				<form method='POST' action='/categories/{{category}}/{{product.name}}?_method=DELETE'>
+				<form method='POST' action='/categories/{{category}}/products/{{product.name}}?_method=DELETE'>
 					<td> {{ product.name }} </td>
 					<td> <button type='submit' class='btn btn-danger'> Delete </button> </td>
 				</form>

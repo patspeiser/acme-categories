@@ -4,7 +4,7 @@ var swig = require('swig');
 var routes = require('./routes/categories.js');
 var db = require('./db.js');
 var bodyParser = require('body-parser');
-// config swig
+var methodOverride = require('method-override');
 swig.setDefaults({
 	cache: false
 });
@@ -18,7 +18,8 @@ app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/node_modules/'));
 
 //use body parser to make handling forms way easier
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(methodOverride('_method'));
 
 // displays index.html
 app.get('/', function(req, res){
@@ -26,14 +27,13 @@ app.get('/', function(req, res){
 });
 
 //adds category
-app.post('/', function(req, res){
-	db.addCategory(req.body.categoryToAdd);
-	res.redirect('/');
-});
 
 //when hitting /categories use router
 app.use('/categories', routes);
 
 
 //make the server listen on this port
-app.listen(8080);
+app.listen(process.env.PORT, function(){
+  console.log('listening on PORT ' + process.env.PORT);
+
+});
